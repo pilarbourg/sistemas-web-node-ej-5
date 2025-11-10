@@ -1,0 +1,43 @@
+var express = require("express");
+var router = express.Router();
+
+const images = [
+  { url: "/images/red.jpg", title: "Rojo" },
+  { url: "/images/yellow.jpg", title: "Amarillo" },
+  { url: "/images/blue.jpg", title: "Azul" },
+];
+
+router.get("/", function (req, res) {
+  res.render("index", {
+    title: "Company",
+    items: images,
+  });
+});
+
+router.get("/login", (req, res) => {
+  res.render("login", { title: "Login" });
+});
+
+router.post("/login", (req, res) => {
+  const { username } = req.body;
+
+  req.session.username = username;
+  res.redirect("/loggedIn");
+});
+
+router.get("/loggedIn", (req, res) => {
+  if (req.session && req.session.username) {
+    res.render("loggedIn", { username: req.session.username });
+  } else {
+    res.redirect("/login");
+  }
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) console.log(err);
+    res.redirect("/");
+  });
+});
+
+module.exports = router;

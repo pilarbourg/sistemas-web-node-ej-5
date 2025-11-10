@@ -1,0 +1,81 @@
+<header><%= title %></header>
+
+<div class="items-grid">
+  <% items.forEach(item => { %>
+  <div class="item-card">
+    <img src="<%= item.url %>" alt="<%= item.title %>" />
+    <p><%= item.title %></p>
+  </div>
+  <% }) %>
+</div>
+
+<a href="/login" class="login-button">Login</a>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    text-align: center;
+    background-color: #f5f5f5;
+  }
+
+  header {
+    background-color: #334a6a;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    color: #334a6a;
+    margin-bottom: 2rem;
+  }
+
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .item-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    color: #334a6a;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .item-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .login-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: #334a6a;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+
+  .login-button:hover {
+    background-color: #0256a0;
+  }
+</style>

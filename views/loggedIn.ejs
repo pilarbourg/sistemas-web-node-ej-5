@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logged in</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f4f8;
+      flex-direction: column;
+    }
+
+    h1 {
+      color: #02367B;
+    }
+
+    a {
+      margin-top: 1rem;
+      text-decoration: none;
+      color: #02367B;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Login successful, <%= username %>!</h1>
+  <a href="/logout">Cerrar sesión</a>
+</body>
+</html>
