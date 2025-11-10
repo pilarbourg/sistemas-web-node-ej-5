@@ -2,9 +2,9 @@ var express = require("express");
 var router = express.Router();
 
 const images = [
-  { url: "/images/red.jpg", title: "Rojo" },
-  { url: "/images/yellow.jpg", title: "Amarillo" },
-  { url: "/images/blue.jpg", title: "Azul" },
+  { url: "/images/red.jpg", title: "Teamwork" },
+  { url: "/images/yellow.jpg", title: "Work faster" },
+  { url: "/images/blue.jpg", title: "Collaborate" },
 ];
 
 router.get("/", function (req, res) {
@@ -34,7 +34,7 @@ router.get("/loggedIn", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.session.destroy(err => {
+  req.session.destroy((err) => {
     if (err) console.log(err);
     res.redirect("/");
   });
