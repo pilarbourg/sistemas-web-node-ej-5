@@ -40,4 +40,16 @@ router.get("/logout", (req, res) => {
   });
 });
 
+function authMiddleware(req, res, next) {
+  if (req.session && req.session.username) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+}
+
+router.get("/chat.html", authMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/login.ejs"));
+});
+
 module.exports = router;

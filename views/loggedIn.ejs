@@ -7,11 +7,12 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       height: 100vh;
       background-color: #f0f4f8;
-      flex-direction: column;
+      padding: 2rem;
     }
 
     h1 {
@@ -24,10 +25,102 @@
       color: #02367B;
       font-weight: 600;
     }
+
+    #chat-container {
+      width: 90%;
+      max-width: 600px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin-top: 2rem;
+      background-color: white;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    #messages {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      flex: 1;
+      overflow-y: auto;
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 1rem;
+    }
+
+    #messages li {
+      padding: 0.5rem;
+      border-radius: 5px;
+      margin-bottom: 0.5rem;
+      background-color: #e1eaf4;
+    }
+
+    #chat-form {
+      display: flex;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 5px 0 0 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    #chat-form button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #02367B;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 0 5px 5px 0;
+    }
+
+    #chat-form button:hover {
+      background-color: #0256A0;
+    }
   </style>
 </head>
 <body>
-  <h1>🎉 Login successful, <%= username %>!</h1>
+  <h1>Login working, <%= username %>!</h1>
   <a href="/logout">Cerrar sesión</a>
+
+  <div id="chat-container">
+    <ul id="messages"></ul>
+    <form id="chat-form">
+      <input id="chat-input" autocomplete="off" placeholder="Type a message..." />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('history', (messages) => {
+      messages.forEach(addMessage);
+    });
+
+    socket.on('chat message', addMessage);
+
+    document.getElementById('chat-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('chat-input');
+      if(input.value.trim() !== "") {
+        socket.emit('chat message', input.value);
+        input.value = '';
+      }
+    });
+
+    function addMessage(msg) {
+      const li = document.createElement('li');
+      li.textContent = `${msg.user}: ${msg.text}`;
+      document.getElementById('messages').appendChild(li);
+      const messagesContainer = document.getElementById('messages');
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  </script>
 </body>
 </html>
